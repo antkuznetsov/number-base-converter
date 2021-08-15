@@ -30,15 +30,12 @@ public class Main {
                         System.out.print("Conversion result: ");
                         String number = userSecondAnswer.toUpperCase(Locale.ROOT);
                         if (sourceBase == 10) {
-                            String res = convertFromDec(new BigInteger(number), targetBase);
-                            System.out.println(res);
+                            System.out.println(convertFromDec(number, targetBase));
                         } else if (targetBase == 10) {
-                            BigInteger res = convertToDec(number, sourceBase);
-                            System.out.println(res);
+                            System.out.println(convertToDec(number, sourceBase));
                         } else {
-                            BigInteger decNumber = convertToDec(number, sourceBase);
-                            String res = convertFromDec(decNumber, targetBase);
-                            System.out.println(res);
+                            String decNumber = convertToDec(number, sourceBase);
+                            System.out.println(convertFromDec(decNumber, targetBase));
                         }
                     }
                 }
@@ -46,8 +43,8 @@ public class Main {
         }
     }
 
-    private static String convertFromDec(BigInteger number, int targetBase) {
-        BigInteger quotient = number;
+    private static String convertFromDec(String number, int targetBase) {
+        BigInteger quotient = new BigInteger(number);
         StringBuilder result = new StringBuilder();
         do {
             BigInteger remainder = quotient.remainder(BigInteger.valueOf(targetBase));
@@ -62,7 +59,7 @@ public class Main {
         return result.reverse().toString();
     }
 
-    private static BigInteger convertToDec(String number, int sourceBase) {
+    private static String convertToDec(String number, int sourceBase) {
         char[] input = number.toCharArray();
         BigInteger result = BigInteger.ZERO;
         BigInteger currentPow = BigInteger.ONE;
@@ -77,6 +74,6 @@ public class Main {
             result = result.add(temp);
             currentPow = currentPow.multiply(BigInteger.valueOf(sourceBase));
         }
-        return result;
+        return result.toString();
     }
 }
